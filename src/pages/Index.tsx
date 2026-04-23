@@ -1,27 +1,42 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ArrowRight, Heart, Sparkles, Baby, Flower2, Quote, ClipboardList, FileSearch, FlaskConical, CalendarCheck } from "lucide-react";
+import { ArrowRight, Heart, Sparkles, Baby, Flower2, Quote, ClipboardList, FileSearch, FlaskConical, CalendarCheck, Mail, Phone, MapPin, Clock, MessageCircle } from "lucide-react";
+import { toast } from "sonner";
 import { Layout } from "@/components/Layout";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { site } from "@/config/site";
+import social from "@/config/social.json";
 import { faqs } from "@/data/faq";
 import { caseStudies } from "@/data/caseStudies";
-// Doctor portrait — swap this file to replace the hero image.
-// Replace: src/assets/doctor-hafiza-malik.png
+// Doctor portrait placeholder — replace with final cutout when ready.
 import doctorImg from "@/assets/doctor-hafiza-malik.png";
 
 const Index = () => {
   const location = useLocation();
+  const [sending, setSending] = useState(false);
 
   useEffect(() => {
     const state = location.state as { scrollTo?: string } | null;
     if (state?.scrollTo) {
-      setTimeout(() => document.getElementById(state.scrollTo!)?.scrollIntoView({ behavior: "smooth" }), 50);
+      setTimeout(() => document.getElementById(state.scrollTo!)?.scrollIntoView({ behavior: "auto" }), 50);
     }
   }, [location]);
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSending(true);
+    setTimeout(() => {
+      setSending(false);
+      toast.success("Thank you — your message has been received. We'll reply shortly.");
+      (e.target as HTMLFormElement).reset();
+    }, 600);
+  };
 
   const jsonLd = [
     {
@@ -45,11 +60,9 @@ const Index = () => {
       <SEO jsonLd={jsonLd} />
 
       {/* Hero */}
-      <section className="container grid gap-10 py-16 md:grid-cols-2 md:py-24 lg:gap-14">
+      <section className="container grid gap-6 py-12 md:grid-cols-2 md:py-16 lg:gap-8">
         <div className="flex flex-col justify-center">
-          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium uppercase tracking-wider text-primary">
-            <Sparkles className="h-3 w-3" /> Classical Homeopathy
-          </span>
+          
           <h1 className="mt-5 font-serif text-4xl leading-tight md:text-5xl lg:text-6xl">
             Gentle remedies,<br />
             <span className="text-primary">deeply individualized</span> care.
@@ -59,7 +72,7 @@ const Index = () => {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild size="lg">
-              <Link to="/contact">Book Consultation <ArrowRight className="ml-1 h-4 w-4" /></Link>
+              <a href="#contact">Book Consultation <ArrowRight className="ml-1 h-4 w-4" /></a>
             </Button>
             <Button asChild size="lg" variant="outline">
               <a href="#specializations">Our Specializations</a>
@@ -82,7 +95,7 @@ const Index = () => {
         </div>
 
         <div className="relative flex items-end justify-center">
-          {/* Doctor cutout shot — swap src/assets/doctor-hafiza-malik.png to replace */}
+          {/* Doctor cutout shot placeholder */}
           <div className="relative">
             <div className="absolute inset-0 -z-10 translate-y-6 scale-95 rounded-[3rem] bg-primary/15 blur-2xl" aria-hidden />
             <img
@@ -97,7 +110,7 @@ const Index = () => {
       </section>
 
       {/* About */}
-      <section id="about" className="container py-16 md:py-24">
+      <section id="about" className="container py-12 md:py-16">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="font-serif text-3xl md:text-4xl">About {site.doctorName}</h2>
           <p className="mt-5 text-foreground/75">{site.shortBio}</p>
@@ -123,7 +136,7 @@ const Index = () => {
       </section>
 
       {/* Specializations */}
-      <section id="specializations" className="container py-16 md:py-24">
+      <section id="specializations" className="container py-12 md:py-16">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="font-serif text-3xl md:text-4xl">Specializations</h2>
           <p className="mt-4 text-foreground/75">
@@ -167,7 +180,7 @@ const Index = () => {
       </section>
 
       {/* How it works */}
-      <section id="how-it-works" className="container py-16 md:py-24">
+      <section id="how-it-works" className="container py-12 md:py-16">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="font-serif text-3xl md:text-4xl">How it works</h2>
           <p className="mt-4 text-foreground/75">A calm, structured path from first consultation to lasting relief.</p>
@@ -192,7 +205,7 @@ const Index = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="container py-16 md:py-24">
+      <section className="container py-12 md:py-16">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="font-serif text-3xl md:text-4xl">What patients share</h2>
         </div>
@@ -214,7 +227,7 @@ const Index = () => {
       </section>
 
       {/* Case studies teaser */}
-      <section className="container py-16 md:py-24">
+      <section className="container py-12 md:py-16">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <h2 className="font-serif text-3xl md:text-4xl">Case studies</h2>
@@ -241,7 +254,7 @@ const Index = () => {
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="container py-16 md:py-24">
+      <section id="faq" className="container py-12 md:py-16">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="font-serif text-3xl md:text-4xl">Frequently asked</h2>
         </div>
@@ -257,16 +270,76 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Contact CTA */}
-      <section className="container pb-20">
-        <div className="rounded-3xl border border-primary/25 bg-primary/10 p-10 text-center md:p-14">
-          <h2 className="font-serif text-3xl md:text-4xl">Ready to begin your healing journey?</h2>
-          <p className="mx-auto mt-4 max-w-xl text-foreground/75">
-            Book a consultation with {site.doctorName} — in person or online. We'll listen, carefully.
+      {/* Contact */}
+      <section id="contact" className="container pb-14 pt-2 md:pt-4">
+        <header className="mx-auto max-w-2xl text-center">
+          <h2 className="font-serif text-3xl md:text-4xl">Get in touch</h2>
+          <p className="mt-4 text-foreground/75">
+            Reach out to book a consultation or ask a question. We aim to respond within one business day.
           </p>
-          <Button asChild size="lg" className="mt-6">
-            <Link to="/contact">Get in touch <ArrowRight className="ml-1 h-4 w-4" /></Link>
-          </Button>
+        </header>
+
+        <div className="mt-8 grid gap-6 lg:grid-cols-5">
+          <Card className="border-border/70 bg-card/70 backdrop-blur lg:col-span-3">
+            <CardContent className="p-6 md:p-8">
+              <form onSubmit={onSubmit} className="grid gap-4">
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className="grid gap-2">
+                    <Label htmlFor="name">Name</Label>
+                    <Input id="name" name="name" required placeholder="Your full name" />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input id="email" name="email" type="email" required placeholder="you@example.com" />
+                  </div>
+                </div>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className="grid gap-2">
+                    <Label htmlFor="phone">Phone</Label>
+                    <Input id="phone" name="phone" type="tel" placeholder="Optional" />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="topic">Topic</Label>
+                    <Input id="topic" name="topic" placeholder="e.g. Women's health, Autism support" />
+                  </div>
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="message">Message</Label>
+                  <Textarea id="message" name="message" required rows={6} placeholder="How can we help?" />
+                </div>
+                <Button type="submit" size="lg" disabled={sending} className="w-fit">
+                  {sending ? "Sending..." : "Send message"}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+
+          <div className="space-y-6 lg:col-span-2">
+            <Card className="border-border/70 bg-card/70 backdrop-blur">
+              <CardContent className="space-y-4 p-6">
+                <h3 className="font-serif text-xl">Clinic details</h3>
+                <ul className="space-y-3 text-sm">
+                  <li className="flex items-start gap-3"><MapPin className="mt-0.5 h-4 w-4 text-primary" /> <span>{site.address}</span></li>
+                  <li className="flex items-start gap-3"><Clock className="mt-0.5 h-4 w-4 text-primary" /> <span>{site.hours}</span></li>
+                  {social.phone && <li className="flex items-start gap-3"><Phone className="mt-0.5 h-4 w-4 text-primary" /> <a href={`tel:${social.phone}`} className="hover:text-primary">{social.phone}</a></li>}
+                  {social.email && <li className="flex items-start gap-3"><Mail className="mt-0.5 h-4 w-4 text-primary" /> <a href={`mailto:${social.email}`} className="hover:text-primary">{social.email}</a></li>}
+                  {social.whatsapp && <li className="flex items-start gap-3"><MessageCircle className="mt-0.5 h-4 w-4 text-primary" /> <a href={`https://wa.me/${social.whatsapp.replace(/\D/g, "")}`} target="_blank" rel="noopener noreferrer" className="hover:text-primary">WhatsApp</a></li>}
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card className="overflow-hidden border-border/70 bg-card/70 backdrop-blur">
+              <div className="aspect-video">
+                <iframe
+                  title="Clinic location map"
+                  src={`https://www.google.com/maps?q=${encodeURIComponent(site.address)}&output=embed`}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="h-full w-full border-0"
+                />
+              </div>
+            </Card>
+          </div>
         </div>
       </section>
     </Layout>

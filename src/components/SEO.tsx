@@ -11,7 +11,9 @@ interface Props {
 export const SEO = ({ title, description, path = "/", jsonLd }: Props) => {
   const fullTitle = title ? `${title} — ${site.clinicName}` : site.seo.title;
   const desc = description ?? site.seo.description;
-  const url = path;
+  const base = site.seo.siteUrl.replace(/\/+$/, "");
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  const url = `${base}${normalizedPath}`;
   return (
     <Helmet>
       <title>{fullTitle}</title>

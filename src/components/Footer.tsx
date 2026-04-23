@@ -3,7 +3,7 @@ import { site } from "@/config/site";
 import { SocialLinks } from "@/components/SocialLinks";
 
 export const Footer = () => (
-  <footer className="mt-20 border-t border-border bg-background/60">
+  <footer className="mt-12 border-t border-border bg-background/60">
     <div className="container grid gap-10 py-12 md:grid-cols-3">
       <div>
         <h3 className="font-serif text-2xl">{site.clinicName}</h3>
@@ -17,7 +17,7 @@ export const Footer = () => (
         <ul className="mt-3 space-y-2 text-sm">
           <li><Link to="/" className="text-foreground/70 hover:text-primary">Home</Link></li>
           <li><Link to="/case-studies" className="text-foreground/70 hover:text-primary">Case Studies</Link></li>
-          <li><Link to="/contact" className="text-foreground/70 hover:text-primary">Contact</Link></li>
+          <li><Link to="/" state={{ scrollTo: "contact" }} className="text-foreground/70 hover:text-primary">Contact</Link></li>
         </ul>
       </div>
       <div>

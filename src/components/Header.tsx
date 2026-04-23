@@ -9,6 +9,7 @@ const sections = [
   { id: "specializations", label: "Specializations" },
   { id: "how-it-works", label: "How It Works" },
   { id: "faq", label: "FAQ" },
+  { id: "contact", label: "Contact" },
 ];
 
 export const Header = () => {
@@ -23,7 +24,7 @@ export const Header = () => {
       navigate("/", { state: { scrollTo: id } });
       return;
     }
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById(id)?.scrollIntoView({ behavior: "auto" });
   };
 
   return (
@@ -49,8 +50,8 @@ export const Header = () => {
           <Link to="/case-studies" className="text-sm text-foreground/70 transition-colors hover:text-primary">
             Case Studies
           </Link>
-          <Button asChild size="sm">
-            <Link to="/contact">Contact</Link>
+          <Button size="sm" onClick={() => goToSection("contact")}>
+            Contact
           </Button>
         </nav>
 
@@ -78,9 +79,6 @@ export const Header = () => {
             ))}
             <Link to="/case-studies" onClick={() => setOpen(false)} className="rounded-md px-3 py-2 text-sm hover:bg-accent">
               Case Studies
-            </Link>
-            <Link to="/contact" onClick={() => setOpen(false)} className="rounded-md px-3 py-2 text-sm hover:bg-accent">
-              Contact
             </Link>
           </nav>
         </div>

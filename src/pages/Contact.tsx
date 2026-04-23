@@ -109,8 +109,14 @@ const Contact = () => {
             </Card>
 
             <Card className="overflow-hidden border-border/70 bg-card/70 backdrop-blur">
-              <div className="flex aspect-video items-center justify-center bg-muted text-sm text-muted-foreground">
-                Map placeholder — embed your clinic location here
+              <div className="aspect-video">
+                <iframe
+                  title="Clinic location map"
+                  src={`https://www.google.com/maps?q=${encodeURIComponent(site.address)}&output=embed`}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="h-full w-full border-0"
+                />
               </div>
             </Card>
           </div>
